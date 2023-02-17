@@ -1,5 +1,5 @@
 var html = `<div class="container-roulette" id = "content-roulette">
-<div class="roullete">
+<div class="roullete loop">
   <!-- fill color -->
   <div class="fill fill_1"></div>
   <div class="fill fill_2"></div>
@@ -20,7 +20,7 @@ var html = `<div class="container-roulette" id = "content-roulette">
 </div>
 <div id="triangle-up"></div>
 
-<button class="trigger">Start</button>
+
 </div>`;
 
 const formTemplate2 =
@@ -72,9 +72,8 @@ webix.ready(function () {
             id: 'betNoti',
             body: {
               id: 'betNotiContent',
-              borderless: true,
-              view: 'text',
-              value: 'abc',
+              view: 'layout',
+              rows: [],
             },
           },
           {
@@ -90,7 +89,7 @@ webix.ready(function () {
       {
         id: 'betLayout',
         cols: [
-          {},
+          { width: 10 },
           {
             view: 'layout',
             rows: [
@@ -103,9 +102,20 @@ webix.ready(function () {
                 view: 'text',
                 label: 'Số tiền',
                 labelWidth: 80,
+                id: 'bet1Amount',
                 pattern: { mask: '##########', allow: /[0-9]/g },
               },
-              { view: 'button', value: 'Đặt', css: 'webix_primary' },
+              {
+                view: 'button',
+                value: 'Đặt',
+                css: 'webix_primary',
+                on: {
+                  onItemClick: () => {
+                    let amount = $$('bet1Amount').getValue();
+                    notiBet(amount, 1);
+                  },
+                },
+              },
             ],
           },
           { width: 20 },
@@ -121,9 +131,20 @@ webix.ready(function () {
                 view: 'text',
                 label: 'Số tiền',
                 labelWidth: 80,
+                id: 'bet2Amount',
                 pattern: { mask: '##########', allow: /[0-9]/g },
               },
-              { view: 'button', value: 'Đặt', css: 'webix_primary' },
+              {
+                view: 'button',
+                value: 'Đặt',
+                css: 'webix_primary',
+                on: {
+                  onItemClick: () => {
+                    let amount = $$('bet2Amount').getValue();
+                    notiBet(amount, 2);
+                  },
+                },
+              },
             ],
           },
           { width: 20 },
@@ -138,10 +159,21 @@ webix.ready(function () {
               {
                 view: 'text',
                 label: 'Số tiền',
+                id: 'bet3Amount',
                 labelWidth: 80,
                 pattern: { mask: '##########', allow: /[0-9]/g },
               },
-              { view: 'button', value: 'Đặt', css: 'webix_primary' },
+              {
+                view: 'button',
+                value: 'Đặt',
+                css: 'webix_primary',
+                on: {
+                  onItemClick: () => {
+                    let amount = $$('bet3Amount').getValue();
+                    notiBet(amount, 3);
+                  },
+                },
+              },
             ],
           },
           { width: 20 },
@@ -155,16 +187,42 @@ webix.ready(function () {
               },
               {
                 view: 'text',
+                id: 'bet4Amount',
                 label: 'Số tiền',
                 labelWidth: 80,
                 pattern: { mask: '##########', allow: /[0-9]/g },
               },
-              { view: 'button', value: 'Đặt', css: 'webix_primary' },
+              {
+                view: 'button',
+                value: 'Đặt',
+                css: 'webix_primary',
+                on: {
+                  onItemClick: () => {
+                    let amount = $$('bet4Amount').getValue();
+                    notiBet(amount, 4);
+                  },
+                },
+              },
             ],
           },
-          {},
+          { width: 20 },
         ],
       },
     ],
   });
 });
+
+const notiBet = (amount, betAt) => {
+  $$('betNotiContent').addView({
+    rows: [
+      {
+        height: 20,
+        borderless: true,
+        view: 'label',
+        label: `Player Crom bet ${amount} at ${betAt} `,
+        readonly: true,
+      },
+      { height: 10 },
+    ],
+  });
+};

@@ -23,7 +23,7 @@ body {
   position: relative;
 }
 .roullete.loop {
-  animation: rotation 5s ease-in-out forwards;
+  animation: rotation 100s linear infinite;
 }
 .fill {
   position: absolute;
@@ -165,7 +165,14 @@ div[view_id="bet-1"] > div , div[view_id="bet-2"] >div, div[view_id="bet-3"] > d
 } 
 div[view_id = "rouletteLayout"],  div[view_id = "rouletteLayout"]>div, div[view_id="betNotiContent"] input{
   background-color:cyan;
+
 }
 div[view_id = "rouletteLayout"]>div {
-  padding-top: 3%;
+  padding-top: 3%; 
 }
+div[view_id="betNotiContent"] input {
+  border: none;
+  height: 20px;
+}
+
+
