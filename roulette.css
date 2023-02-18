@@ -14,23 +14,50 @@ body {
   justify-content: center;
   align-items: center;
 }
-.roullete {
-  width: 200px;
-  height: 200px;
+.roulette {
+  width: 300px;
+  height: 300px;
   border-radius: 50%;
   background: white;
   border: 3px solid black;
   position: relative;
+
+  animation: rotation 3s ease-in-out forwards;
+
 }
-.roullete.loop {
-  animation: rotation 100s linear infinite;
+
+.spin {
+  /* animation: rotation ease-in-out forwards; 
+   animation-duration: 3s;
+   transform: rotate(270deg); */
 }
+
+.roulette.animate-1 {
+  animation-delay: 0s;
+}
+
+.roulette.animate-2 {
+  animation-delay: 0.5s;
+}
+
+.roulette.animate-3 {
+  animation-delay: 1s;
+}
+
+.roulette.animate-4 {
+  animation-delay: 1.5s;
+}
+
+.roulette.animate-5 {
+  animation-delay: 2s;
+}
+
 .fill {
   position: absolute;
   top: 0;
   left: 0;
-  width: 200px;
-  height: 200px;
+  width: 300px;
+  height: 300px;
   border-radius: 50%;
   /* clip: rect(0px, 100px, 100px, 0px); */
 }
@@ -39,10 +66,10 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  width: 200px;
-  height: 200px;
+  width: 300px;
+  height: 300px;
   border-radius: 50%;
-  clip: rect(0px, 100px, 100px, 0px);
+  clip: rect(0px, 150px, 150px, 0px);
   transform: rotate(90deg);
 }
 .fill_1 {
@@ -77,11 +104,11 @@ body {
   background: lightpink;
 }
 .line {
-  width: 200px;
+  width: 300px;
   height: 3px;
   background: black;
   position: absolute;
-  top: 99px;
+  top: 150px;
   left: 0;
 }
 .line_1 {
@@ -100,7 +127,7 @@ body {
   font-size: 30px;
   font-weight: bold;
   padding-top: 20px;
-  height: 190px;
+  height: 280px;
   position: absolute;
   width: 100%;
   text-align: center;
@@ -163,16 +190,30 @@ div[view_id="bet-1"] > div , div[view_id="bet-2"] >div, div[view_id="bet-3"] > d
   background-color: #31C5A3;
   color: white !important;
 } 
-div[view_id = "rouletteLayout"],  div[view_id = "rouletteLayout"]>div, div[view_id="betNotiContent"] input{
+div[view_id = "rouletteLayout"], div[view_id = "rouletteLayout"]>div,  div[view_id="betNotiContent"] input{
   background-color:cyan;
-
 }
 div[view_id = "rouletteLayout"]>div {
   padding-top: 3%; 
+}
+div[view_id = "betNoti"] {
+  background-color: #31C5A3 !important;
 }
 div[view_id="betNotiContent"] input {
   border: none;
   height: 20px;
 }
-
-
+div[view_id = "betNotiContent"] .webix_el_box {
+  color: white;
+  padding-left: 20px;
+  height: max-content !important;
+  padding-right: 10px
+}
+div[view_id = "roulette"] {
+  margin-left: 17% !important;
+  margin-top: 2% !important
+}
+div[view_id = "betNotiContent"] > div > div {
+  height: max-content !important;
+}
+ 

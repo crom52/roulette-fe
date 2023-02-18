@@ -1,5 +1,5 @@
 var html = `<div class="container-roulette" id = "content-roulette">
-<div class="roullete loop">
+<div class="roulette">
   <!-- fill color -->
   <div class="fill fill_1"></div>
   <div class="fill fill_2"></div>
@@ -64,7 +64,7 @@ webix.ready(function () {
       {
         id: 'rouletteLayout',
         borderless: false,
-        height: 350,
+        height: 450,
         cols: [
           {
             view: 'scrollview',
@@ -73,7 +73,17 @@ webix.ready(function () {
             body: {
               id: 'betNotiContent',
               view: 'layout',
-              rows: [],
+              width: 300,
+              rows: [
+                {
+                  height: 20,
+                  borderless: true,
+                  view: 'label',
+                  label: `Player Crom has joined the room`,
+                  readonly: true,
+                },
+                { height: 10 },
+              ],
             },
           },
           {
@@ -210,7 +220,38 @@ webix.ready(function () {
       },
     ],
   });
+  // const evtSource = new EventSource('10.0.0.193:8080/api/stream', {
+  //   withCredentials: false,
+  // });
+  // setTimeout(function () {
+  //   webix.message('Game will start after 2 seconds');
+  //   $('.spin').css(
+  //     'animation',
+  //     `rotation ${randomNumber(4, 8)} ease-in-out forwards`
+  //   );
+  //   console.log('ok');
+  // }, 2000);
+  var randomTransform = 'rotate(' + Math.floor(Math.random() * 7045) + 'deg)';
+  var randomDuration = Math.floor(Math.random() * 3) + 2;
+  var randomAnimation = 'animate-' + Math.floor(Math.random() * 5 + 1);
+  var randomDelay = Math.random() * 1.5 + 0.5;
+
+  $('.roulette').css({
+    transform: randomTransform,
+    'animation-duration': randomDuration + 's',
+    'animation-delay': randomDelay + 's',
+  });
+
+  // console.log(randomDuration, randomTransform);
+  // $('.roulette').css({
+  //   transform: randomTransform,
+  //   'animation-duration': randomDuration + 's',
+  // });
 });
+
+function randomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
 
 const notiBet = (amount, betAt) => {
   $$('betNotiContent').addView({
@@ -219,7 +260,7 @@ const notiBet = (amount, betAt) => {
         height: 20,
         borderless: true,
         view: 'label',
-        label: `Player Crom bet ${amount} at ${betAt} `,
+        label: `Player Crom bet ${amount} at ${betAt}  `,
         readonly: true,
       },
       { height: 10 },
