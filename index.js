@@ -246,7 +246,7 @@ webix.ready(function () {
               {
                 id: 'assetLabel',
                 view: 'label',
-                label: 'Tài sản: ',
+                label: 'Balance: ',
                 // labelWidth: 100,
                 width: 100,
               },
