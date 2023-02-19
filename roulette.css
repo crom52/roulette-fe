@@ -21,8 +21,8 @@ body {
   background: white;
   border: 3px solid black;
   position: relative;
-
-  animation: rotation 3s ease-in-out forwards;
+  transform: rotate(0deg);
+  /* animation: rotation 3s ease-in-out forwards; */
 
 }
 
@@ -73,26 +73,26 @@ body {
   transform: rotate(90deg);
 }
 .fill_1 {
-  transform: rotate(-45deg);
+  transform: rotate(0deg);
 }
 
 .fill_1::after {
   background: lightcoral;
 }
 .fill_2 {
-  transform: rotate(45deg);
+  transform: rotate(90deg);
 }
 .fill_2::after {
   background: lightgreen;
 }
 .fill_3 {
-  transform: rotate(135deg);
+  transform: rotate(180deg);
 }
 .fill_3::after {
   background: lightseagreen;
 }
 .fill_4 {
-  transform: rotate(225deg);
+  transform: rotate(270deg);
 }
 .fill_4::after {
   background: pink;
@@ -105,24 +105,24 @@ body {
 }
 .line {
   width: 300px;
-  height: 3px;
+  height: 2px;
   background: black;
   position: absolute;
   top: 150px;
   left: 0;
 }
 .line_1 {
-  transform: rotate(45deg);
+  transform: rotate(0deg);
 }
-.line_2 {
+/* .line_2 {
+  transform: rotate(90deg);
+} */
+.line_3 {
   transform: rotate(90deg);
 }
-.line_3 {
-  transform: rotate(135deg);
-}
-.line_4 {
+/* .line_4 {
   transform: rotate(180deg);
-}
+} */
 .content {
   font-size: 30px;
   font-weight: bold;
@@ -133,29 +133,18 @@ body {
   text-align: center;
 }
 .content_1 {
-  transform: rotate(0deg);
+  transform: rotate(45deg);
 }
 .content_2 {
-  transform: rotate(90deg);
+  transform: rotate(135deg);
 }
 .content_3 {
-  transform: rotate(180deg);
+  transform: rotate(225deg);
 }
 .content_4 {
-  transform: rotate(270deg);
+  transform: rotate(315deg);
 }
-/* .content_5 {
-  transform: rotate(202deg);
-}
-.content_6 {
-  transform: rotate(247deg);
-}
-.content_7 {
-  transform: rotate(292deg);
-}
-.content_8 {
-  transform: rotate(337deg);
-} */
+
 
 .trigger {
   margin-top: 20px;
@@ -194,7 +183,7 @@ div[view_id = "rouletteLayout"], div[view_id = "rouletteLayout"]>div,  div[view_
   background-color:cyan;
 }
 div[view_id = "rouletteLayout"]>div {
-  padding-top: 3%; 
+  padding-top: 2%; 
 }
 div[view_id = "betNoti"] {
   background-color: #31C5A3 !important;
@@ -211,9 +200,15 @@ div[view_id = "betNotiContent"] .webix_el_box {
 }
 div[view_id = "roulette"] {
   margin-left: 17% !important;
-  margin-top: 2% !important
+  /* margin-top: 2% !important */
 }
 div[view_id = "betNotiContent"] > div > div {
   height: max-content !important;
 }
  
+div[view_id= "roulette"] {
+  height: max-content !important;
+}
+div[view_id = "asset"] input{
+  border: none !important;
+}

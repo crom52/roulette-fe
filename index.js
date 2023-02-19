@@ -19,8 +19,7 @@ var html = `<div class="container-roulette" id = "content-roulette">
 
 </div>
 <div id="triangle-up"></div>
-
-
+<button class="trigger" id = "spin">Start</button>
 </div>`;
 
 const formTemplate2 =
@@ -120,9 +119,12 @@ webix.ready(function () {
                 value: 'Đặt',
                 css: 'webix_primary',
                 on: {
-                  onItemClick: () => {
-                    let amount = $$('bet1Amount').getValue();
+                  onItemClick: async () => {
+                    let amount = Number($$('bet1Amount').getValue());
+                    if (!(await validateBetAmount(amount))) return;
                     notiBet(amount, 1);
+                    setAssetAfterBet(amount);
+                    storeBetHistory('Crom', '1', amount);
                   },
                 },
               },
@@ -149,9 +151,14 @@ webix.ready(function () {
                 value: 'Đặt',
                 css: 'webix_primary',
                 on: {
-                  onItemClick: () => {
-                    let amount = $$('bet2Amount').getValue();
+                  onItemClick: async () => {
+                    let amount = Number($$('bet2Amount').getValue());
+                    if (!(await validateBetAmount(amount))) return;
+
                     notiBet(amount, 2);
+
+                    setAssetAfterBet(amount);
+                    storeBetHistory('Crom', '2', amount);
                   },
                 },
               },
@@ -178,9 +185,12 @@ webix.ready(function () {
                 value: 'Đặt',
                 css: 'webix_primary',
                 on: {
-                  onItemClick: () => {
-                    let amount = $$('bet3Amount').getValue();
+                  onItemClick: async () => {
+                    let amount = Number($$('bet3Amount').getValue());
+                    if (!(await validateBetAmount(amount))) return;
                     notiBet(amount, 3);
+                    setAssetAfterBet(amount);
+                    storeBetHistory('Crom', '3', amount);
                   },
                 },
               },
@@ -207,9 +217,12 @@ webix.ready(function () {
                 value: 'Đặt',
                 css: 'webix_primary',
                 on: {
-                  onItemClick: () => {
-                    let amount = $$('bet4Amount').getValue();
+                  onItemClick: async () => {
+                    let amount = Number($$('bet4Amount').getValue());
+                    if (!(await validateBetAmount(amount))) return;
                     notiBet(amount, 4);
+                    setAssetAfterBet(amount);
+                    storeBetHistory('Crom', '4', amount);
                   },
                 },
               },
@@ -218,52 +231,152 @@ webix.ready(function () {
           { width: 20 },
         ],
       },
+      { height: 30 },
+      {
+        view: 'layout',
+        id: 'playerInfoLayout',
+        rows: [
+          {
+            cols: [
+              {},
+              {
+                id: 'assetLabel',
+                view: 'label',
+                label: 'Tài sản: ',
+                // labelWidth: 100,
+                width: 100,
+              },
+              {
+                id: 'asset',
+                view: 'text',
+                // label:""
+                value: 10000,
+                readonly: true,
+                borderless: true,
+              },
+              {},
+            ],
+          },
+        ],
+      },
     ],
   });
   // const evtSource = new EventSource('10.0.0.193:8080/api/stream', {
   //   withCredentials: false,
   // });
-  // setTimeout(function () {
-  //   webix.message('Game will start after 2 seconds');
-  //   $('.spin').css(
-  //     'animation',
-  //     `rotation ${randomNumber(4, 8)} ease-in-out forwards`
-  //   );
-  //   console.log('ok');
-  // }, 2000);
-  var randomTransform = 'rotate(' + Math.floor(Math.random() * 7045) + 'deg)';
-  var randomDuration = Math.floor(Math.random() * 3) + 2;
-  var randomAnimation = 'animate-' + Math.floor(Math.random() * 5 + 1);
-  var randomDelay = Math.random() * 1.5 + 0.5;
-
-  $('.roulette').css({
-    transform: randomTransform,
-    'animation-duration': randomDuration + 's',
-    'animation-delay': randomDelay + 's',
+  $('#spin').click(async function () {
+    await spin();
   });
-
-  // console.log(randomDuration, randomTransform);
-  // $('.roulette').css({
-  //   transform: randomTransform,
-  //   'animation-duration': randomDuration + 's',
-  // });
 });
 
-function randomNumber(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
-}
+const spin = async () => {
+  const spinner = document.querySelector('.roulette');
+  var rNumber = Math.random();
+  var randomDeg = ((rNumber * (360 - 0 + 1)) / 4) * 1000;
+  var oldDeg = randomDeg;
+  if (Math.abs(oldDeg - randomDeg) < 2000) {
+    randomDeg += 2000;
+  }
+  if (randomDeg % 90 == 0) {
+    randomDeg += 10; //in order not to point at the line-devide
+  }
+  spinner.style.transition = 'transform 10s forwards';
+  spinner.style.transition = 'transform 10s cubic-bezier(0.1, 0.7, 0.1, 1)';
+  // spinner.style.animationDelay = '10s';
 
-const notiBet = (amount, betAt) => {
+  spinner.style.transform = `rotate(${randomDeg}deg)`;
+  let value = randomDeg - Math.floor(randomDeg / 360) * 360;
+  let rs;
+  {
+    if (value >= 0 && value <= 90) {
+      rs = 2;
+    } else if (value >= 90 && value <= 180) {
+      rs = 1;
+    } else if (value >= 180 && value <= 270) {
+      rs = 4;
+    } else if (value >= 270 && value <= 360) {
+      rs = 3;
+    } else {
+      console.log('error');
+    }
+  }
+  setTimeout(() => {
+    if (value >= 0 && value <= 90) {
+      webix.message('2');
+    } else if (value >= 90 && value <= 180) {
+      webix.message('1');
+    } else if (value >= 180 && value <= 270) {
+      webix.message('4');
+    } else if (value >= 270 && value <= 360) {
+      webix.message('3');
+    } else {
+      console.log('error');
+    }
+    fundForWinner(rs);
+    clearAllBet();
+  }, 10800);
+
+  return rs;
+};
+
+const notiBet = (amount, betAtNumber) => {
   $$('betNotiContent').addView({
     rows: [
       {
         height: 20,
         borderless: true,
         view: 'label',
-        label: `Player Crom bet ${amount} at ${betAt}  `,
+        label: `Player Crom has bet ${amount} at ${betAtNumber}  `,
         readonly: true,
       },
       { height: 10 },
     ],
   });
+};
+
+const setAssetAfterBet = async (amount) => {
+  let asset = Number($$('asset').getValue());
+  $$('asset').setValue((asset - amount).toString());
+};
+const validateBetAmount = async (amount) => {
+  let asset = Number($$('asset').getValue());
+  if (asset < amount) {
+    await webix.alert('Không đủ tiền', 'alert-error');
+    return false;
+  }
+  return true;
+};
+let betHistories = [];
+const storeBetHistory = (player, betAtNumber, amount) => {
+  betHistories.push({
+    player: player,
+    betAtNumber: betAtNumber,
+    amount: amount,
+  });
+};
+
+const fundForWinner = async (resultSpiner) => {
+  let winners = betHistories.filter((e) => e.betAtNumber == resultSpiner);
+  if (winners.length == 0) return;
+  const winnersNeedToFundMap = await winners.reduce((next, cur) => {
+    const { player, amount } = cur;
+    next[player] = (next[player] || 0) + Number(amount);
+    return next;
+  }, {}); //=> {Crom : 1000, XXX : 2}
+  //call api with param ({Crom : 1000, XXX : 2}) to fund
+
+  let currentUser = 'Crom';
+  currentAsset = Number($$('asset').getValue());
+  if (!winnersNeedToFundMap[`${currentUser}`]) return;
+  $$('asset').setValue(
+    (currentAsset + Number(winnersNeedToFundMap[`${currentUser}`])).toString()
+  );
+  betHistories = [];
+};
+
+const clearAllBet = () => {
+  $$('bet1Amount').setValue('');
+  $$('bet2Amount').setValue('');
+  $$('bet3Amount').setValue('');
+  $$('bet4Amount').setValue('');
 };
