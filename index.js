@@ -109,10 +109,54 @@ webix.ready(function () {
               },
               {
                 view: 'text',
-                label: 'Số tiền',
+                label: 'Amount',
                 labelWidth: 80,
                 id: 'bet1Amount',
                 pattern: { mask: '##########', allow: /[0-9]/g },
+              },
+              {
+                cols: [
+                  {
+                    view: 'button',
+                    id: 'bet1Button10Percent',
+                    value: '10%',
+                    on: {
+                      onItemClick: () => {
+                        fill10Percent(1);
+                      },
+                    },
+                  },
+                  {
+                    view: 'button',
+                    id: 'bet1Button25Percent',
+                    value: '25%',
+                    on: {
+                      onItemClick: () => {
+                        fill25Percent(1);
+                      },
+                    },
+                  },
+                  {
+                    view: 'button',
+                    id: 'bet1Button50Percent',
+                    value: '50%',
+                    on: {
+                      onItemClick: () => {
+                        fill50Percent(1);
+                      },
+                    },
+                  },
+                  {
+                    view: 'button',
+                    id: 'bet1Button100Percent',
+                    value: '100%',
+                    on: {
+                      onItemClick: () => {
+                        fill100Percent(1);
+                      },
+                    },
+                  },
+                ],
               },
               {
                 view: 'button',
@@ -142,10 +186,54 @@ webix.ready(function () {
               },
               {
                 view: 'text',
-                label: 'Số tiền',
+                label: 'Amount',
                 labelWidth: 80,
                 id: 'bet2Amount',
                 pattern: { mask: '##########', allow: /[0-9]/g },
+              },
+              {
+                cols: [
+                  {
+                    view: 'button',
+                    id: 'bet2Button10Percent',
+                    value: '10%',
+                    on: {
+                      onItemClick: () => {
+                        fill10Percent(2);
+                      },
+                    },
+                  },
+                  {
+                    view: 'button',
+                    id: 'bet2Button25Percent',
+                    value: '25%',
+                    on: {
+                      onItemClick: () => {
+                        fill25Percent(2);
+                      },
+                    },
+                  },
+                  {
+                    view: 'button',
+                    id: 'bet2Button50Percent',
+                    value: '50%',
+                    on: {
+                      onItemClick: () => {
+                        fill50Percent(2);
+                      },
+                    },
+                  },
+                  {
+                    view: 'button',
+                    id: 'be21Button100Percent',
+                    value: '100%',
+                    on: {
+                      onItemClick: () => {
+                        fill100Percent(2);
+                      },
+                    },
+                  },
+                ],
               },
               {
                 view: 'button',
@@ -177,10 +265,54 @@ webix.ready(function () {
               },
               {
                 view: 'text',
-                label: 'Số tiền',
+                label: 'Amount',
                 id: 'bet3Amount',
                 labelWidth: 80,
                 pattern: { mask: '##########', allow: /[0-9]/g },
+              },
+              {
+                cols: [
+                  {
+                    view: 'button',
+                    id: 'bet3Button10Percent',
+                    value: '10%',
+                    on: {
+                      onItemClick: () => {
+                        fill10Percent(3);
+                      },
+                    },
+                  },
+                  {
+                    view: 'button',
+                    id: 'bet3Button25Percent',
+                    value: '25%',
+                    on: {
+                      onItemClick: () => {
+                        fill25Percent(3);
+                      },
+                    },
+                  },
+                  {
+                    view: 'button',
+                    id: 'bet3Button50Percent',
+                    value: '50%',
+                    on: {
+                      onItemClick: () => {
+                        fill50Percent(3);
+                      },
+                    },
+                  },
+                  {
+                    view: 'button',
+                    id: 'bet3Button100Percent',
+                    value: '100%',
+                    on: {
+                      onItemClick: () => {
+                        fill100Percent(3);
+                      },
+                    },
+                  },
+                ],
               },
               {
                 view: 'button',
@@ -211,9 +343,53 @@ webix.ready(function () {
               {
                 view: 'text',
                 id: 'bet4Amount',
-                label: 'Số tiền',
+                label: 'Amount',
                 labelWidth: 80,
                 pattern: { mask: '##########', allow: /[0-9]/g },
+              },
+              {
+                cols: [
+                  {
+                    view: 'button',
+                    id: 'bet4Button10Percent',
+                    value: '10%',
+                    on: {
+                      onItemClick: () => {
+                        fill10Percent(4);
+                      },
+                    },
+                  },
+                  {
+                    view: 'button',
+                    id: 'bet4Button25Percent',
+                    value: '25%',
+                    on: {
+                      onItemClick: () => {
+                        fill25Percent(4);
+                      },
+                    },
+                  },
+                  {
+                    view: 'button',
+                    id: 'bet4Button50Percent',
+                    value: '50%',
+                    on: {
+                      onItemClick: () => {
+                        fill50Percent(4);
+                      },
+                    },
+                  },
+                  {
+                    view: 'button',
+                    id: 'bet4Button100Percent',
+                    value: '100%',
+                    on: {
+                      onItemClick: () => {
+                        fill100Percent(4);
+                      },
+                    },
+                  },
+                ],
               },
               {
                 view: 'button',
@@ -247,8 +423,8 @@ webix.ready(function () {
                 id: 'assetLabel',
                 view: 'label',
                 label: 'Balance: ',
-                // labelWidth: 100,
-                width: 100,
+                labelWidth: 50,
+                width: 60,
               },
               {
                 id: 'asset',
@@ -413,4 +589,21 @@ const enableBetButton = () => {
   $$('bet2Button').enable();
   $$('bet3Button').enable();
   $$('bet4Button').enable();
+};
+
+const fill10Percent = (betAtNumber) => {
+  let currentBalance = Number($$('asset').getValue());
+  $$(`bet${betAtNumber}Amount`).setValue(Math.floor(currentBalance * 0.1));
+};
+const fill25Percent = (betAtNumber) => {
+  let currentBalance = Number($$('asset').getValue());
+  $$(`bet${betAtNumber}Amount`).setValue(Math.floor(currentBalance * 0.25));
+};
+const fill50Percent = (betAtNumber) => {
+  let currentBalance = Number($$('asset').getValue());
+  $$(`bet${betAtNumber}Amount`).setValue(Math.floor(currentBalance * 0.5));
+};
+const fill100Percent = (betAtNumber) => {
+  let currentBalance = Number($$('asset').getValue());
+  $$(`bet${betAtNumber}Amount`).setValue(currentBalance);
 };
