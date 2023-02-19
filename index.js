@@ -318,6 +318,7 @@ const spin = async () => {
 };
 
 const notiBet = (amount, betAtNumber) => {
+  if (!amount || amount <= 0) return;
   $$('betNotiContent').addView({
     rows: [
       {
