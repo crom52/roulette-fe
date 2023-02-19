@@ -313,7 +313,7 @@ const spin = async () => {
       console.log('error');
     }
     fundForWinner(rs);
-    clearAllBet();
+    // clearAllBet();
   }, 10800);
 
   return rs;
@@ -368,10 +368,31 @@ const fundForWinner = async (resultSpiner) => {
   let currentUser = 'Crom';
   currentAsset = Number($$('asset').getValue());
   if (!winnersNeedToFundMap[`${currentUser}`]) return;
-  $$('asset').setValue(
-    (currentAsset + Number(winnersNeedToFundMap[`${currentUser}`])).toString()
-  );
+  let name = Object.keys(winnersNeedToFundMap).find((e) => e == currentUser);
+  if (!name) return;
+  let totalWinAmount = winnersNeedToFundMap[name];
+  $$('asset').setValue((currentAsset + Number(totalWinAmount)).toString());
+
   betHistories = [];
+  notiWin(winnersNeedToFundMap);
+};
+
+const notiWin = (winnersMap) => {
+  if (!winnersMap) return;
+  for (const [key, value] of Object.entries(winnersMap)) {
+    $$('betNotiContent').addView({
+      rows: [
+        {
+          height: 20,
+          borderless: true,
+          view: 'label',
+          label: `Player ${key} has win $ ${value} `,
+          readonly: true,
+        },
+        { height: 10 },
+      ],
+    });
+  }
 };
 
 const clearAllBet = () => {
