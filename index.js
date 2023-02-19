@@ -116,7 +116,8 @@ webix.ready(function () {
               },
               {
                 view: 'button',
-                value: 'Đặt',
+                id: 'bet1Button',
+                value: 'Bet',
                 css: 'webix_primary',
                 on: {
                   onItemClick: async () => {
@@ -148,7 +149,8 @@ webix.ready(function () {
               },
               {
                 view: 'button',
-                value: 'Đặt',
+                value: 'Bet',
+                id: 'bet2Button',
                 css: 'webix_primary',
                 on: {
                   onItemClick: async () => {
@@ -182,7 +184,8 @@ webix.ready(function () {
               },
               {
                 view: 'button',
-                value: 'Đặt',
+                id: 'bet3Button',
+                value: 'Bet',
                 css: 'webix_primary',
                 on: {
                   onItemClick: async () => {
@@ -214,7 +217,8 @@ webix.ready(function () {
               },
               {
                 view: 'button',
-                value: 'Đặt',
+                id: 'bet4Button',
+                value: 'Bet',
                 css: 'webix_primary',
                 on: {
                   onItemClick: async () => {
@@ -265,6 +269,7 @@ webix.ready(function () {
   //   withCredentials: false,
   // });
   $('#spin').click(async function () {
+    disableBetButton();
     await spin();
   });
 });
@@ -287,33 +292,26 @@ const spin = async () => {
   spinner.style.transform = `rotate(${randomDeg}deg)`;
   let value = randomDeg - Math.floor(randomDeg / 360) * 360;
   let rs;
-  {
-    if (value >= 0 && value <= 90) {
-      rs = 2;
-    } else if (value >= 90 && value <= 180) {
-      rs = 1;
-    } else if (value >= 180 && value <= 270) {
-      rs = 4;
-    } else if (value >= 270 && value <= 360) {
-      rs = 3;
-    } else {
-      console.log('error');
-    }
-  }
+
   setTimeout(() => {
     if (value >= 0 && value <= 90) {
+      rs = 2;
       webix.message('2');
     } else if (value >= 90 && value <= 180) {
+      rs = 1;
       webix.message('1');
     } else if (value >= 180 && value <= 270) {
+      rs = 4;
       webix.message('4');
     } else if (value >= 270 && value <= 360) {
+      rs = 3;
       webix.message('3');
     } else {
       console.log('error');
     }
     fundForWinner(rs);
     // clearAllBet();
+    enableBetButton();
   }, 10800);
 
   return rs;
@@ -341,7 +339,7 @@ const setAssetAfterBet = async (amount) => {
 const validateBetAmount = async (amount) => {
   let asset = Number($$('asset').getValue());
   if (asset < amount) {
-    await webix.alert('Không đủ tiền', 'alert-error');
+    await webix.alert('Not enough balance', 'alert-error');
     return false;
   }
   return true;
@@ -400,4 +398,18 @@ const clearAllBet = () => {
   $$('bet2Amount').setValue('');
   $$('bet3Amount').setValue('');
   $$('bet4Amount').setValue('');
+};
+
+const disableBetButton = () => {
+  $$('bet1Button').disable();
+  $$('bet2Button').disable();
+  $$('bet3Button').disable();
+  $$('bet4Button').disable();
+};
+
+const enableBetButton = () => {
+  $$('bet1Button').enable();
+  $$('bet2Button').enable();
+  $$('bet3Button').enable();
+  $$('bet4Button').enable();
 };
