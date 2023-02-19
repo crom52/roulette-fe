@@ -212,3 +212,6 @@ div[view_id= "roulette"] {
 div[view_id = "asset"] input{
   border: none !important;
 }
+div[view_id= "betNoti"] > div{
+  margin-bottom: 15px;
+}
