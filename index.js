@@ -441,9 +441,18 @@ webix.ready(function () {
       },
     ],
   });
-  // const evtSource = new EventSource('10.0.0.193:8080/api/stream', {
-  //   withCredentials: false,
-  // });
+  const evtSource = new EventSource('http://168.138.21.22:8082/api/stream', {
+    withCredentials: false,
+  });
+
+  evtSource.onmessage = function (event) {
+    webix.message('SSE message: ' + event.data);
+  };
+
+  evtSource.addEventListener('roulette', function (event) {
+    console.log(event.data);
+  });
+
   $('#spin').click(async function () {
     disableBetButton();
     await spin();
