@@ -19,7 +19,6 @@ var html = `<div class="container-roulette" id = "content-roulette">
 
 </div>
 <div id="triangle-up"></div>
-<button class="trigger" id = "spin">Start</button>
 </div>`;
 
 const formTemplate2 =
@@ -452,35 +451,28 @@ webix.ready(function () {
 
   evtSource.addEventListener('roulette', function (event) {
     let data = JSON.parse(event.data);
+
     let nextRound = moment(data.nextRound);
     let now = moment();
     let start = moment(data.start);
     let end = moment(data.end);
-    let afterSecondWillStart = now.diff(start);
     let diffNowToNext = nextRound.diff(now);
     let diffNowToEnd = end.diff(now);
     let timeout = diffNowToNext - diffNowToEnd;
-    console.log('now', now.toDate());
-    console.log('start', start.toDate());
-    console.log('end', end.toDate());
-    console.log('diff now to end ', diffNowToEnd);
-    console.log('diff now and next rond ', diffNowToNext);
-    console.log('-----------------------');
-    var devide;
-    if (diffNowToEnd > 10000) {
-      devide = diffNowToEnd % 10000;
-    } else if (diffNowToEnd > 1000) {
-      devide = diffNowToEnd % 1000;
-    }
+    let latency = start - now;
+
     if (start > now) {
-      let remain = start - now;
+      console.log('now', now.toDate());
+      console.log('start', start.toDate());
+      console.log('end', end.toDate());
+      console.log('diff now to end ', diffNowToEnd);
+      console.log('diff now and next rond ', diffNowToNext);
+      console.log('latency', latency);
       setTimeout(() => {
-        webix.message('game start after 10s');
-        setTimeout(() => {
-          spin(20);
-          clearTimeout();
-        }, 20000);
-      }, remain);
+        console.log('time spin', moment().toDate());
+        console.log('-----------------------');
+        spin(20);
+      }, -1 * latency);
       clearTimeout();
     } else {
     }
@@ -530,6 +522,7 @@ const spin = async (second) => {
     fundForWinner(rs);
     // clearAllBet();
     enableBetButton();
+    webix.message(`Next game will be started after 10 seconds`);
   }, 20100);
 
   return rs;
