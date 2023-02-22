@@ -446,20 +446,53 @@ webix.ready(function () {
   });
 
   evtSource.onmessage = function (event) {
-    webix.message('SSE message: ' + event.data);
+    // let evt = JSON.parse(event.data);
+    // console.log(ent.start);
   };
 
   evtSource.addEventListener('roulette', function (event) {
-    console.log(event.data);
+    let data = JSON.parse(event.data);
+    let nextRound = moment(data.nextRound);
+    let now = moment();
+    let start = moment(data.start);
+    let end = moment(data.end);
+    let afterSecondWillStart = now.diff(start);
+    let diffNowToNext = nextRound.diff(now);
+    let diffNowToEnd = end.diff(now);
+    let timeout = diffNowToNext - diffNowToEnd;
+    console.log('now', now.toDate());
+    console.log('start', start.toDate());
+    console.log('end', end.toDate());
+    console.log('diff now to end ', diffNowToEnd);
+    console.log('diff now and next rond ', diffNowToNext);
+    console.log('-----------------------');
+    var devide;
+    if (diffNowToEnd > 10000) {
+      devide = diffNowToEnd % 10000;
+    } else if (diffNowToEnd > 1000) {
+      devide = diffNowToEnd % 1000;
+    }
+    if (start > now) {
+      let remain = start - now;
+      setTimeout(() => {
+        webix.message('game start after 10s');
+        setTimeout(() => {
+          spin(20);
+          clearTimeout();
+        }, 20000);
+      }, remain);
+      clearTimeout();
+    } else {
+    }
   });
 
-  $('#spin').click(async function () {
-    disableBetButton();
-    await spin();
-  });
+  // $('#spin').click(async function () {
+  //   disableBetButton();
+  //   await spin();
+  // });
 });
 
-const spin = async () => {
+const spin = async (second) => {
   const spinner = document.querySelector('.roulette');
   var rNumber = Math.random();
   var randomDeg = ((rNumber * (360 - 0 + 1)) / 4) * 1000;
@@ -470,8 +503,8 @@ const spin = async () => {
   if (randomDeg % 90 == 0) {
     randomDeg += 10; //in order not to point at the line-devide
   }
-  spinner.style.transition = 'transform 10s forwards';
-  spinner.style.transition = 'transform 10s cubic-bezier(0.1, 0.7, 0.1, 1)';
+  spinner.style.transition = `transform ${second} forwards`;
+  spinner.style.transition = `transform ${second}s cubic-bezier(0.1, 0.7, 0.1, 1)`;
   // spinner.style.animationDelay = '10s';
 
   spinner.style.transform = `rotate(${randomDeg}deg)`;
@@ -497,7 +530,7 @@ const spin = async () => {
     fundForWinner(rs);
     // clearAllBet();
     enableBetButton();
-  }, 10800);
+  }, 20100);
 
   return rs;
 };
