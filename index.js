@@ -485,6 +485,7 @@ webix.ready(function () {
 });
 
 const spin = async (second) => {
+  disableBetButton();
   const spinner = document.querySelector('.roulette');
   var rNumber = Math.random();
   var randomDeg = ((rNumber * (360 - 0 + 1)) / 4) * 1000;
